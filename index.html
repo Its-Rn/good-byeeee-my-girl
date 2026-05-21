@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One Last Goodbye</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="overlay-open">
+    <div class="page-bg" aria-hidden="true">
+      <div class="page-bg__glow page-bg__glow--left"></div>
+      <div class="page-bg__glow page-bg__glow--right"></div>
+      <div class="page-bg__stars" id="stars"></div>
+    </div>
+
+    <div class="overlay" id="letterOverlay">
+      <div class="overlay__card">
+        <p class="overlay__eyebrow">For one special person</p>
+        <div class="overlay__envelope" aria-hidden="true">
+          <div class="overlay__paper"></div>
+        </div>
+        <h1 class="overlay__title">A goodbye I still needed to say</h1>
+        <p class="overlay__text" id="overlayText">
+          This page holds the words that felt too heavy to leave unfinished.
+        </p>
+        <button class="button button--primary" id="openLetterButton" type="button">
+          Open the goodbye
+        </button>
+      </div>
+    </div>
+
+    <main>
+      <section class="hero reveal">
+        <div class="hero__content">
+          <p class="hero__eyebrow">A last meeting. A lasting memory.</p>
+          <h1 class="hero__title" id="heroTitle">To someone unforgettable</h1>
+          <p class="hero__quote" id="heroQuote">
+            Some people stay in our story even when life only lets them stay for a chapter.
+          </p>
+          <div class="hero__meta">
+            <span id="metaOne">Last hello</span>
+            <span id="metaTwo">Unsaid words</span>
+            <span id="metaThree">Still remembered</span>
+          </div>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#letter">Read the letter</a>
+            <a class="button button--ghost" href="#memories">Keep the memories</a>
+          </div>
+        </div>
+        <aside class="hero__note">
+          <p class="hero__note-label">Kept close</p>
+          <p class="hero__note-text" id="heroNote">
+            If this was the last time our paths crossed, I still want the moment to be honored with care.
+          </p>
+          <p class="hero__note-sign" id="heroFrom">With love, from someone who remembers</p>
+        </aside>
+      </section>
+
+      <section class="section section--letter reveal" id="letter">
+        <div class="section__heading">
+          <p class="section__eyebrow">The letter</p>
+          <h2>The words I would leave with you</h2>
+        </div>
+
+        <div class="letter-layout">
+          <article class="paper-card">
+            <p class="paper-card__lead" id="letterLead">
+              There are people we expect to forget, and then there are people who quietly become part of us.
+            </p>
+            <div class="paper-card__body" id="letterBody">
+              <p>
+                Meeting you changed the way I look at timing, connection, and the fragile beauty of a single moment.
+              </p>
+              <p>
+                Even if this was our last chapter, I want you to know you mattered in ways bigger than the time we had.
+              </p>
+              <p>
+                I will carry the good in you forward, and I hope life returns that goodness to you in every place I cannot follow.
+              </p>
+            </div>
+            <p class="paper-card__signature" id="signature">Goodbye, and thank you for being real.</p>
+          </article>
+
+          <aside class="glass-card">
+            <p class="glass-card__eyebrow">What remains</p>
+            <ul class="glass-card__list" id="remainList">
+              <li>A memory that still feels warm</li>
+              <li>A story I will not speak of lightly</li>
+              <li>A quiet kind of gratitude</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section reveal" id="memories">
+        <div class="section__heading">
+          <p class="section__eyebrow">Moments I keep</p>
+          <h2>The memories that still glow</h2>
+        </div>
+
+        <div class="memory-layout">
+          <div class="memory-list" id="memoryList">
+            <button class="memory-card is-active" type="button" data-memory="0">
+              <span class="memory-card__index">01</span>
+              <span class="memory-card__title">The first hello</span>
+            </button>
+            <button class="memory-card" type="button" data-memory="1">
+              <span class="memory-card__index">02</span>
+              <span class="memory-card__title">The calmest moment</span>
+            </button>
+            <button class="memory-card" type="button" data-memory="2">
+              <span class="memory-card__index">03</span>
+              <span class="memory-card__title">The last look back</span>
+            </button>
+          </div>
+
+          <article class="memory-detail">
+            <p class="memory-detail__eyebrow">Selected memory</p>
+            <h3 id="memoryTitle">The first hello</h3>
+            <p id="memoryText">
+              I still remember the beginning, because sometimes the smallest opening becomes the doorway to something unforgettable.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="wishes">
+        <div class="section__heading">
+          <p class="section__eyebrow">If we never meet again</p>
+          <h2>These are the things I still wish for you</h2>
+        </div>
+
+        <div class="wish-list" id="wishList">
+          <article class="wish">
+            <span class="wish__number">01</span>
+            <p>That you are loved with the same gentleness you gave without trying.</p>
+          </article>
+          <article class="wish">
+            <span class="wish__number">02</span>
+            <p>That life becomes kinder to you in every place where it once felt late.</p>
+          </article>
+          <article class="wish">
+            <span class="wish__number">03</span>
+            <p>That when you think of me, the memory carries peace more than pain.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--closing reveal" id="closing">
+        <div class="closing-card">
+          <p class="section__eyebrow">One last line</p>
+          <h2 id="closingTitle">Goodbye, but never without meaning.</h2>
+          <p id="closingText">
+            Some endings are not failures. They are proof that something beautiful once existed.
+          </p>
+          <div class="closing-card__footer">
+            <span id="closingFrom">From someone whose life was changed by meeting you</span>
+            <span id="currentDate"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
