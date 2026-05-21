@@ -177,11 +177,11 @@ function updateMemory(index, options = {}) {
     card.classList.toggle("is-active", isActive);
 
     if (isActive && options.scrollCard !== false) {
-      const useInlineCenter = window.matchMedia("(max-width: 1024px)").matches;
+      const useInlineCenter = window.matchMedia("(max-width: 900px)").matches;
       card.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: useInlineCenter ? "center" : "nearest",
+        inline: useInlineCenter ? "start" : "nearest",
       });
     }
   });
@@ -209,7 +209,7 @@ function updateMemoryRailState() {
     return;
   }
 
-  const isCompactMemoryRail = window.matchMedia("(max-width: 1024px)").matches;
+  const isCompactMemoryRail = window.matchMedia("(max-width: 900px)").matches;
   const hasOverflow = isCompactMemoryRail
     ? memoryList.scrollWidth > memoryList.clientWidth + 4
     : memoryList.scrollHeight > memoryList.clientHeight + 4;
@@ -224,7 +224,7 @@ function updateMemoryRailState() {
 }
 
 function syncMemorySelectionFromScroll() {
-  if (!memoryList || !window.matchMedia("(max-width: 1024px)").matches) {
+  if (!memoryList || !window.matchMedia("(max-width: 900px)").matches) {
     return;
   }
 
@@ -264,7 +264,7 @@ function bindMemoryRail() {
     () => {
       updateMemoryRailState();
 
-      if (window.matchMedia("(max-width: 1024px)").matches) {
+      if (window.matchMedia("(max-width: 900px)").matches) {
         window.cancelAnimationFrame(memoryScrollSyncFrame);
         memoryScrollSyncFrame = window.requestAnimationFrame(syncMemorySelectionFromScroll);
       }
