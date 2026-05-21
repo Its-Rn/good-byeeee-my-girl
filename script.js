@@ -23,16 +23,38 @@ const farewellContent = {
   ],
   memories: [
     {
+      date: "18 Octomber 2024",
       title: "The first hello",
-      text: "I still remember the beginning, because sometimes the smallest opening becomes the doorway to something unforgettable.",
+      text: "I still remember the first day I met you - the beginning, because life rarely announces the moments that will later mean everything........",
     },
     {
+      date: "02 January 2025",
       title: "The calmest moment",
-      text: "There was a moment with you that felt safe, simple, and strangely complete. That kind of peace is rare, and I do not take it lightly.",
+      text: "There was a moment that felt safe, simple, and strangely complete. That kind of peace is rare. I had never experienced anything like it before - it was the kind of feeling I could never fully put into words.",
     },
     {
-      title: "The last look back",
-      text: "Some goodbyes do not become loud. They become a silence we keep revisiting because it carried more feeling than words could hold.",
+      date: "10 Januuary 2025",
+      title: "A day that never truly ended",
+      text: `10 January 2025 - an unforgettable day of my life. Sometimes we imagine countless possibilities, yet destiny carries its own plans. Some unspoken things never become loud; instead, they become a silence we keep returning to, because they hold more emotion than words ever could.
+
+In that silence, all I wanted was to listen to you. I kept wondering how someone can wait so deeply for another person - what such waiting truly means. Feelings, emotions, memories... everything seemed impossible to explain completely. I have countless words to describe how it all happened, and so many things I still want to share with you. But the moment was so intense, so delicate, that from then on, everything inside me slowly became silent.
+
+And for me, that day was never truly ended.`,
+    },
+    {
+      date: "22 January 2025",
+      title: "The words I still kept",
+      text: "There were so many things I wanted to say, but not every feeling arrives with courage at the same time. Some words stayed inside me, not because they were small, but because they mattered too much.",
+    },
+    {
+      date: "14 February 2025",
+      title: "A distance that still felt close",
+      text: "Even when there was distance, something in your presence stayed near. It was strange and beautiful to miss someone and still feel guided by the memory of them.",
+    },
+    {
+      date: "03 March 2025",
+      title: "The goodbye I could not rush",
+      text: "Some goodbyes refuse to be short. They keep returning in thoughts, pauses, and late-night silence until the heart learns how to carry them gently.",
     },
   ],
   wishes: [
@@ -55,6 +77,7 @@ const letterLead = document.getElementById("letterLead");
 const letterBody = document.getElementById("letterBody");
 const remainList = document.getElementById("remainList");
 const memoryList = document.getElementById("memoryList");
+const memoryRail = document.getElementById("memoryRail");
 const memoryTitle = document.getElementById("memoryTitle");
 const memoryText = document.getElementById("memoryText");
 const wishList = document.getElementById("wishList");
@@ -107,14 +130,23 @@ function setTextContent() {
   memoryList.innerHTML = farewellContent.memories
     .map(
       (memory, index) => `
-        <button class="memory-card${index === 0 ? " is-active" : ""}" type="button" data-memory="${index}">
-          <span class="memory-card__index">${String(index + 1).padStart(2, "0")}</span>
+        <button
+          class="memory-card${index === 0 ? " is-active" : ""}"
+          type="button"
+          data-memory="${index}"
+          onclick="window.selectMemory && window.selectMemory(${index})"
+        >
+          <span class="memory-card__meta">
+            <span class="memory-card__index">${String(index + 1).padStart(2, "0")}</span>
+            ${memory.date ? `<span class="memory-card__date">${memory.date}</span>` : ""}
+          </span>
           <span class="memory-card__title">${memory.title}</span>
         </button>
       `
     )
     .join("");
 
+  bindMemoryCards();
   updateMemory(0);
 }
 
@@ -130,18 +162,51 @@ function updateMemory(index) {
   document.querySelectorAll(".memory-card").forEach((card) => {
     const isActive = Number(card.dataset.memory) === index;
     card.classList.toggle("is-active", isActive);
+
+    if (isActive) {
+      card.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  });
+
+  window.setTimeout(updateMemoryRailState, 260);
+}
+
+window.selectMemory = updateMemory;
+
+function bindMemoryCards() {
+  document.querySelectorAll(".memory-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      updateMemory(Number(card.dataset.memory));
+    });
   });
 }
 
-function bindMemoryCards() {
-  memoryList.addEventListener("click", (event) => {
-    const target = event.target.closest(".memory-card");
-    if (!target) {
-      return;
-    }
+function updateMemoryRailState() {
+  if (!memoryList || !memoryRail) {
+    return;
+  }
 
-    updateMemory(Number(target.dataset.memory));
-  });
+  const hasOverflow = memoryList.scrollHeight > memoryList.clientHeight + 4;
+  const atTop = memoryList.scrollTop <= 6;
+  const atBottom =
+    memoryList.scrollTop + memoryList.clientHeight >= memoryList.scrollHeight - 6;
+
+  memoryRail.classList.toggle("has-overflow", hasOverflow);
+  memoryRail.classList.toggle("is-at-top", atTop);
+  memoryRail.classList.toggle("is-at-bottom", atBottom);
+}
+
+function bindMemoryRail() {
+  if (!memoryList) {
+    return;
+  }
+
+  memoryList.addEventListener("scroll", updateMemoryRailState, { passive: true });
+  window.addEventListener("resize", updateMemoryRailState);
+  window.requestAnimationFrame(updateMemoryRailState);
 }
 
 function bindOverlay() {
@@ -199,7 +264,7 @@ function addParticles() {
 }
 
 setTextContent();
-bindMemoryCards();
+bindMemoryRail();
 bindOverlay();
 applyCurrentDate();
 revealOnScroll();
