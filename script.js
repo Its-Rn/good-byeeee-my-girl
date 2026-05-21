@@ -78,6 +78,7 @@ const letterBody = document.getElementById("letterBody");
 const remainList = document.getElementById("remainList");
 const memoryList = document.getElementById("memoryList");
 const memoryRail = document.getElementById("memoryRail");
+const memoryIndicators = document.getElementById("memoryIndicators");
 const memoryTitle = document.getElementById("memoryTitle");
 const memoryText = document.getElementById("memoryText");
 const wishList = document.getElementById("wishList");
@@ -87,6 +88,8 @@ const closingFrom = document.getElementById("closingFrom");
 const currentDate = document.getElementById("currentDate");
 const signature = document.getElementById("signature");
 const metaIds = ["metaOne", "metaTwo", "metaThree"];
+let activeMemoryIndex = 0;
+let memoryScrollSyncFrame = null;
 
 function setTextContent() {
   document.title = `Goodbye, ${farewellContent.person}`;
@@ -146,16 +149,26 @@ function setTextContent() {
     )
     .join("");
 
+  if (memoryIndicators) {
+    memoryIndicators.innerHTML = farewellContent.memories
+      .map(
+        (_, index) =>
+          `<span class="memory-mobile-indicator${index === 0 ? " is-active" : ""}" data-memory-indicator="${index}"></span>`
+      )
+      .join("");
+  }
+
   bindMemoryCards();
   updateMemory(0);
 }
 
-function updateMemory(index) {
+function updateMemory(index, options = {}) {
   const selectedMemory = farewellContent.memories[index];
   if (!selectedMemory) {
     return;
   }
 
+  activeMemoryIndex = index;
   memoryTitle.textContent = selectedMemory.title;
   memoryText.textContent = selectedMemory.text;
 
@@ -163,12 +176,19 @@ function updateMemory(index) {
     const isActive = Number(card.dataset.memory) === index;
     card.classList.toggle("is-active", isActive);
 
-    if (isActive) {
+    if (isActive && options.scrollCard !== false) {
+      const useInlineCenter = window.matchMedia("(max-width: 1024px)").matches;
       card.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
+        inline: useInlineCenter ? "center" : "nearest",
       });
     }
+  });
+
+  document.querySelectorAll("[data-memory-indicator]").forEach((indicator) => {
+    const isActive = Number(indicator.dataset.memoryIndicator) === index;
+    indicator.classList.toggle("is-active", isActive);
   });
 
   window.setTimeout(updateMemoryRailState, 260);
@@ -189,14 +209,49 @@ function updateMemoryRailState() {
     return;
   }
 
-  const hasOverflow = memoryList.scrollHeight > memoryList.clientHeight + 4;
-  const atTop = memoryList.scrollTop <= 6;
-  const atBottom =
-    memoryList.scrollTop + memoryList.clientHeight >= memoryList.scrollHeight - 6;
+  const isCompactMemoryRail = window.matchMedia("(max-width: 1024px)").matches;
+  const hasOverflow = isCompactMemoryRail
+    ? memoryList.scrollWidth > memoryList.clientWidth + 4
+    : memoryList.scrollHeight > memoryList.clientHeight + 4;
+  const atTop = isCompactMemoryRail ? memoryList.scrollLeft <= 6 : memoryList.scrollTop <= 6;
+  const atBottom = isCompactMemoryRail
+    ? memoryList.scrollLeft + memoryList.clientWidth >= memoryList.scrollWidth - 6
+    : memoryList.scrollTop + memoryList.clientHeight >= memoryList.scrollHeight - 6;
 
   memoryRail.classList.toggle("has-overflow", hasOverflow);
   memoryRail.classList.toggle("is-at-top", atTop);
   memoryRail.classList.toggle("is-at-bottom", atBottom);
+}
+
+function syncMemorySelectionFromScroll() {
+  if (!memoryList || !window.matchMedia("(max-width: 1024px)").matches) {
+    return;
+  }
+
+  const cards = Array.from(document.querySelectorAll(".memory-card"));
+  if (!cards.length) {
+    return;
+  }
+
+  const listRect = memoryList.getBoundingClientRect();
+  const targetX = listRect.left + listRect.width * 0.4;
+  let closestIndex = activeMemoryIndex;
+  let closestDistance = Number.POSITIVE_INFINITY;
+
+  cards.forEach((card) => {
+    const cardRect = card.getBoundingClientRect();
+    const cardCenter = cardRect.left + cardRect.width / 2;
+    const distance = Math.abs(cardCenter - targetX);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestIndex = Number(card.dataset.memory);
+    }
+  });
+
+  if (closestIndex !== activeMemoryIndex) {
+    updateMemory(closestIndex, { scrollCard: false });
+  }
 }
 
 function bindMemoryRail() {
@@ -204,7 +259,18 @@ function bindMemoryRail() {
     return;
   }
 
-  memoryList.addEventListener("scroll", updateMemoryRailState, { passive: true });
+  memoryList.addEventListener(
+    "scroll",
+    () => {
+      updateMemoryRailState();
+
+      if (window.matchMedia("(max-width: 1024px)").matches) {
+        window.cancelAnimationFrame(memoryScrollSyncFrame);
+        memoryScrollSyncFrame = window.requestAnimationFrame(syncMemorySelectionFromScroll);
+      }
+    },
+    { passive: true }
+  );
   window.addEventListener("resize", updateMemoryRailState);
   window.requestAnimationFrame(updateMemoryRailState);
 }

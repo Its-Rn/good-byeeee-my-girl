@@ -440,6 +440,10 @@ main {
   height: 0;
 }
 
+.memory-mobile-indicators {
+  display: none;
+}
+
 .memory-list-shell__cue {
   position: absolute;
   left: 0;
@@ -684,12 +688,22 @@ main {
     gap: 1.25rem;
   }
 
+  .memory-list-shell {
+    overflow: hidden;
+  }
+
   .memory-list {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(17rem, 72%);
+    align-items: stretch;
     max-height: none;
-    overflow: visible;
-    padding: 0;
-    scroll-snap-type: none;
-    overscroll-behavior: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.45rem 14vw 0.95rem 0;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+    touch-action: auto;
     mask-image: none;
   }
 
@@ -697,8 +711,33 @@ main {
     display: none;
   }
 
+  .memory-mobile-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.42rem;
+    margin-top: 0.35rem;
+  }
+
+  .memory-mobile-indicator {
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 999px;
+    background: rgba(255, 231, 213, 0.24);
+    transition: width 0.28s ease, background 0.28s ease, transform 0.28s ease;
+  }
+
+  .memory-mobile-indicator.is-active {
+    width: 1.55rem;
+    background: linear-gradient(90deg, rgba(249, 209, 182, 0.95), rgba(212, 128, 95, 0.9));
+    transform: translateY(-1px);
+  }
+
   .memory-card {
     padding: 1.1rem 1.05rem;
+    min-height: 10.75rem;
+    align-content: start;
+    scroll-snap-align: center;
   }
 
   .memory-detail {
@@ -738,6 +777,12 @@ main {
     gap: 1rem;
   }
 
+  .memory-list {
+    grid-auto-columns: 84%;
+    padding: 0.3rem 16vw 0.9rem 0;
+    gap: 0.75rem;
+  }
+
   .memory-detail,
   .closing-card {
     padding: 1.35rem;
@@ -745,6 +790,7 @@ main {
 
   .memory-card {
     padding: 1rem;
+    min-height: 10rem;
   }
 
   .memory-card__title {
