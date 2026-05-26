@@ -334,6 +334,28 @@ main {
   max-width: 12ch;
 }
 
+.closing-title__line {
+  white-space: nowrap;
+}
+
+.section-heading__line {
+  white-space: nowrap;
+}
+
+.section-heading--single-line {
+  max-width: none;
+}
+
+#wishes .section__heading h2 {
+  max-width: none;
+}
+
+#wishes .section-heading__line {
+  display: block;
+  white-space: nowrap;
+  font-size: clamp(0.92rem, 4.1vw, 4.4rem);
+}
+
 .letter-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
@@ -565,6 +587,14 @@ main {
   margin-top: 0.5rem;
 }
 
+.memory-detail__date {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 226, 197, 0.62);
+}
+
 .memory-detail p:last-child {
   margin: 1.2rem 0 0;
   line-height: 1.9;
@@ -598,6 +628,10 @@ main {
 .closing-card p {
   margin: 0;
   line-height: 1.9;
+}
+
+#closingText {
+  white-space: pre-line;
 }
 
 .section--closing {

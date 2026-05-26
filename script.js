@@ -1,5 +1,5 @@
 const farewellContent = {
-  person: "Your Special Person",
+  person: "Special Person",
   from: "Someone who still carries this memory",
   overlayText:
     "This page is for the goodbye that mattered too much to leave unsaid.",
@@ -33,7 +33,7 @@ const farewellContent = {
       text: "There was a moment that felt safe, simple, and strangely complete. That kind of peace is rare. I had never experienced anything like it before - it was the kind of feeling I could never fully put into words.",
     },
     {
-      date: "10 Januuary 2025",
+      date: "10 January 2025",
       title: "A day that never truly ended",
       text: `10 January 2025 - an unforgettable day of my life. Sometimes we imagine countless possibilities, yet destiny carries its own plans. Some unspoken things never become loud; instead, they become a silence we keep returning to, because they hold more emotion than words ever could.
 
@@ -42,18 +42,27 @@ In that silence, all I wanted was to listen to you. I kept wondering how someone
 And for me, that day was never truly ended.`,
     },
     {
-      date: "22 January 2025",
-      title: "The words I still kept",
-      text: "There were so many things I wanted to say, but not every feeling arrives with courage at the same time. Some words stayed inside me, not because they were small, but because they mattered too much.",
+      date: "27 February 2026",
+      title:
+        "Some days pass like ordinary pages of life, but a few moments become unforgettable",
+      text: `That day also started like a normal day for me. So many things happened throughout the day, but suddenly I saw your call on my phone. You have no idea how happy I felt in that moment. The moment I heard your voice, everything around me felt different. Every single word you said is still saved in my heart. Even today, I remember that conversation and smile quietly to myself.
+
+Honestly, I never wanted that call to end - I just wanted to keep listening to you forever.
+
+Honestly, I was really thankful that you called me that day. You may not realize it, but that one call became one of the most special moments of my life.`,
     },
     {
-      date: "14 February 2025",
+      date: "9 April 2026",
       title: "A distance that still felt close",
-      text: "Even when there was distance, something in your presence stayed near. It was strange and beautiful to miss someone and still feel guided by the memory of them.",
+      text: `For that, I was truly excited. I had been planning everything since the end of March. In all that excitement, I even mailed my product manager three times because I wanted leave for that day in next month. I was so confused about what I should do to make your birthday feel special for you.
+
+I planned so many things in my mind, but a day before, I realized maybe I didn't really have the right to do all that. So, I decided to take it easy. I quietly came from Pune to Chhatrapati Sambhajinagar just to cut a cake and keep the moment simple. I cancelled all the other plans I had made.
+
+But maybe destiny wanted to write that day differently..................`,
     },
     {
-      date: "03 March 2025",
-      title: "The goodbye I could not rush",
+      date: "22 june 2026",
+      title: "And then came the last goodbye",
       text: "Some goodbyes refuse to be short. They keep returning in thoughts, pauses, and late-night silence until the heart learns how to carry them gently.",
     },
   ],
@@ -62,9 +71,19 @@ And for me, that day was never truly ended.`,
     "That life becomes kinder to you in every place where it once felt late.",
     "That when you think of me, the memory carries peace more than pain.",
   ],
-  closingTitle: "Goodbye, but never without meaning.",
+  closingTitle:
+    "Good bye,<br><span class=\"closing-title__line\">my favorite person.</span>",
   closingText:
-    "Some endings are not failures. They are proof that something beautiful once existed.",
+
+    `Right now, I don't even have the words to say goodbye. I never expected that day would come this fast. But in the end, I just want to say thank you so much for coming into my life and for all those memories.
+I am really sorry for everything - for my behavior, for disturbing you, and for all the mistakes I made. Please forgive me for all of that.
+No matter what happens, I will always be grateful that our paths crossed. Take care of yourself, and thank you for being a part of my life. 
+
+Aaj Promise karto ki ya nantar kadhi hi message karun disturb nahi karnar, ani tras pan nahi denar.
+One last time… goodbye forever.
+
+Ani Kalgi ghe swatachi.
+Kadhi visarnar tar nahi na…........!`,
   signature: "Goodbye, and thank you for being real.",
 };
 
@@ -80,6 +99,7 @@ const memoryList = document.getElementById("memoryList");
 const memoryRail = document.getElementById("memoryRail");
 const memoryIndicators = document.getElementById("memoryIndicators");
 const memoryTitle = document.getElementById("memoryTitle");
+const memoryDate = document.getElementById("memoryDate");
 const memoryText = document.getElementById("memoryText");
 const wishList = document.getElementById("wishList");
 const closingTitle = document.getElementById("closingTitle");
@@ -100,7 +120,7 @@ function setTextContent() {
   overlayText.textContent = farewellContent.overlayText;
   letterLead.textContent = farewellContent.letterLead;
   signature.textContent = farewellContent.signature;
-  closingTitle.textContent = farewellContent.closingTitle;
+  closingTitle.innerHTML = farewellContent.closingTitle;
   closingText.textContent = farewellContent.closingText;
   closingFrom.textContent = `From ${farewellContent.from}`;
 
@@ -170,6 +190,7 @@ function updateMemory(index, options = {}) {
 
   activeMemoryIndex = index;
   memoryTitle.textContent = selectedMemory.title;
+  memoryDate.textContent = selectedMemory.date || "";
   memoryText.textContent = selectedMemory.text;
 
   document.querySelectorAll(".memory-card").forEach((card) => {
@@ -213,10 +234,14 @@ function updateMemoryRailState() {
   const hasOverflow = isCompactMemoryRail
     ? memoryList.scrollWidth > memoryList.clientWidth + 4
     : memoryList.scrollHeight > memoryList.clientHeight + 4;
-  const atTop = isCompactMemoryRail ? memoryList.scrollLeft <= 6 : memoryList.scrollTop <= 6;
+  const atTop = isCompactMemoryRail
+    ? memoryList.scrollLeft <= 6
+    : memoryList.scrollTop <= 6;
   const atBottom = isCompactMemoryRail
-    ? memoryList.scrollLeft + memoryList.clientWidth >= memoryList.scrollWidth - 6
-    : memoryList.scrollTop + memoryList.clientHeight >= memoryList.scrollHeight - 6;
+    ? memoryList.scrollLeft + memoryList.clientWidth >=
+      memoryList.scrollWidth - 6
+    : memoryList.scrollTop + memoryList.clientHeight >=
+      memoryList.scrollHeight - 6;
 
   memoryRail.classList.toggle("has-overflow", hasOverflow);
   memoryRail.classList.toggle("is-at-top", atTop);
@@ -266,7 +291,9 @@ function bindMemoryRail() {
 
       if (window.matchMedia("(max-width: 900px)").matches) {
         window.cancelAnimationFrame(memoryScrollSyncFrame);
-        memoryScrollSyncFrame = window.requestAnimationFrame(syncMemorySelectionFromScroll);
+        memoryScrollSyncFrame = window.requestAnimationFrame(
+          syncMemorySelectionFromScroll
+        );
       }
     },
     { passive: true }
