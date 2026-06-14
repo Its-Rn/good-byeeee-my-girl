@@ -913,15 +913,13 @@ main {
 
 @media (hover: none) and (pointer: coarse) {
   :root {
-    --glass: rgba(22, 15, 28, 0.94);
-    --glass-strong: rgba(28, 20, 36, 0.98);
+    --glass: #16101d;
+    --glass-strong: #1d1326;
     --line: rgba(255, 233, 215, 0.22);
   }
 
   .overlay {
-    background:
-      linear-gradient(180deg, rgba(10, 7, 16, 0.98), rgba(20, 13, 26, 0.99)),
-      radial-gradient(circle at top, rgba(255, 219, 186, 0.08), transparent 40%);
+    background: linear-gradient(180deg, #09070e 0%, #130c19 100%);
   }
 
   .overlay__card,
@@ -930,7 +928,7 @@ main {
   .memory-card,
   .wish,
   .memory-list-shell__cue-text {
-    background: rgba(22, 15, 28, 0.96);
+    background: linear-gradient(180deg, #1d1326 0%, #17101f 100%);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
@@ -946,7 +944,7 @@ main {
   }
 
   .overlay__card {
-    background: rgba(22, 15, 28, 0.98);
+    background: linear-gradient(180deg, #221633 0%, #18101f 100%);
   }
 
   .hero__meta span,
@@ -961,6 +959,6 @@ main {
   .hero__meta a:hover,
   .hero__meta a:focus-visible {
     transform: none;
-    background: rgba(28, 20, 36, 0.98);
+    background: linear-gradient(180deg, #241839 0%, #1a1124 100%);
   }
 }
