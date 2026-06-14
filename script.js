@@ -61,15 +61,15 @@ I planned so many things in my mind, but a day before, I realized maybe I didn't
 But maybe destiny wanted to write that day differently..................`,
     },
     {
-      date: "22 june 2026",
+      date: "19 june 2026",
       title: "And then came the last goodbye",
-      text: "Some goodbyes refuse to be short. They keep returning in thoughts, pauses, and late-night silence until the heart learns how to carry them gently.",
+      text: "The last Day. Some goodbyes refuse to be short. They keep returning in thoughts, pauses, and late-night silence until the heart learns how to carry them gently.",
     },
   ],
   wishes: [
-    "That you are loved with the same gentleness you gave without trying.",
-    "That life becomes kinder to you in every place where it once felt late.",
-    "That when you think of me, the memory carries peace more than pain.",
+    "I hope you get everything in life that you've always dreamed of.",
+    "I wish you always carry the happiest smile on your face. May you never feel that anything was left to do in your life.",
+    "Last ek request ki doctor ni je kahi suggest kela aahe kiwa follow karayla sangitla aahe, te shakya hoil tevdha nakki follow kart ja. Please tras nako vadhavun gheu. Aani swatachi kalji ghet ja.",
   ],
   closingTitle:
     "Good bye,<br><span class=\"closing-title__line\">my favorite person.</span>",
@@ -79,7 +79,9 @@ But maybe destiny wanted to write that day differently..................`,
 I am really sorry for everything - for my behavior, for disturbing you, and for all the mistakes I made. Please forgive me for all of that.
 No matter what happens, I will always be grateful that our paths crossed. Take care of yourself, and thank you for being a part of my life. 
 
-Aaj Promise karto ki ya nantar kadhi hi message karun disturb nahi karnar, ani tras pan nahi denar.
+
+Aani aik na, khup divsanpasun sangaycha hota ki sorry yaar. Mala maaf kar ki mi tuzhi privacy compromise keli. Tuzhya birthdaychya divshi mi tuzhya mobilecha camera access kela hota. Mahit nahi yaar ka, pan tevha mala kahi samjat navhta ki mi kay kart aahe ani ka kart aahe. Please, ya sathi mala maaf kar. Mala mahit aahe ki mi tuzha trust todla aahe. Kadhachit ya nantar tu majhyavar punha kadhich trust thevnar nahis. Pan aaj jar mi he sangitla nast tar he guilt lifetime tasach rahun gel asta. I am extremely sorry. Please, ya sathi mala maaf kar
+Aani Aaj Promise karto ki ya nantar kadhi hi message karun tula disturb nahi karnar, ani tras pan nahi denar.
 One last time… goodbye forever.
 
 Ani Kalgi ghe swatachi.
@@ -141,9 +143,8 @@ function setTextContent() {
 
   wishList.innerHTML = farewellContent.wishes
     .map(
-      (wish, index) => `
+      (wish) => `
         <article class="wish">
-          <span class="wish__number">${String(index + 1).padStart(2, "0")}</span>
           <p>${wish}</p>
         </article>
       `

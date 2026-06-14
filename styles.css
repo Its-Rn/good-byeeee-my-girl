@@ -278,11 +278,29 @@ main {
   gap: 0.75rem;
 }
 
-.hero__meta span {
+.hero__meta span,
+.hero__meta a {
+  display: inline-flex;
+  align-items: center;
   padding: 0.65rem 1rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(255, 243, 231, 0.06);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.hero__meta a {
+  cursor: pointer;
+}
+
+.hero__meta a:hover,
+.hero__meta a:focus-visible {
+  background: rgba(255, 243, 231, 0.12);
+  border-color: rgba(255, 232, 216, 0.28);
+  transform: translateY(-1px);
 }
 
 .hero__actions {
@@ -608,20 +626,14 @@ main {
 }
 
 .wish {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   align-items: start;
   padding: 1.35rem 1.4rem;
   border-radius: 1.5rem;
   border: 1px solid var(--line);
   background: rgba(255, 245, 235, 0.05);
-}
-
-.wish__number {
-  color: rgba(255, 216, 183, 0.82);
-  font-size: 0.84rem;
-  letter-spacing: 0.2em;
 }
 
 .wish p,
@@ -642,6 +654,10 @@ main {
   background:
     radial-gradient(circle at top, rgba(252, 211, 182, 0.11), transparent 35%),
     rgba(255, 245, 235, 0.07);
+}
+
+#closingCard {
+  scroll-margin-top: 1.5rem;
 }
 
 .closing-card__footer {
